@@ -16,8 +16,8 @@ const homeHref = baseUrl;
 ---
 
 <BaseLayout
-  title={`${subject.title} | 學測知識庫`}
-  description={`學測${subject.title}整理頁，包含章節導覽與重點內容。`}
+  title={`${subject.title} | Study Atlas`}
+  description={`${subject.title} overview with chapter navigation, notes, and linked study content.`}
 >
   <section
     class="relative overflow-hidden px-6 py-14 text-center"
@@ -36,7 +36,7 @@ const homeHref = baseUrl;
   </section>
 
   <div class="mx-auto max-w-3xl px-4 py-3 text-sm text-[var(--fg2)]">
-    <a href={homeHref} class="hover:underline">首頁</a>
+    <a href={homeHref} class="hover:underline">Home</a>
     <span class="mx-2">/</span>
     <span class="font-semibold text-[var(--fg)]">{subject.title}</span>
   </div>
@@ -73,7 +73,7 @@ const homeHref = baseUrl;
                       </span>
                       {section.ready && (
                         <span class="rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-600">
-                          已完成
+                          Ready
                         </span>
                       )}
                     </div>

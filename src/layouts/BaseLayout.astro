@@ -9,11 +9,12 @@ interface Props {
 
 const {
   title,
-  description = "學測知識庫，整理高中各科重點、圖解、公式與複習內容。",
+  description = "Study Atlas is a small learning workspace for notes, maps, and chapter-based review.",
   ogTitle,
 } = Astro.props;
 
-const siteTitle = title.includes("學測知識庫") ? title : `${title} | 學測知識庫`;
+const siteName = "Study Atlas";
+const siteTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const baseUrl = import.meta.env.BASE_URL;
 const homeHref = baseUrl;
 const faviconHref = `${baseUrl}favicon.svg`;
@@ -46,14 +47,14 @@ const faviconHref = `${baseUrl}favicon.svg`;
     <nav class="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 backdrop-blur">
       <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <a href={homeHref} class="flex items-center gap-2 font-bold text-[var(--fg)] no-underline">
-          <span class="text-xl">📚</span>
+          <span class="text-xl">🧭</span>
           <span class="text-base leading-tight">
-            學測<span class="text-[var(--accent)]">知識庫</span>
+            Study <span class="text-[var(--accent)]">Atlas</span>
           </span>
         </a>
         <div class="flex items-center gap-1 text-sm">
           <a href={homeHref} class="rounded-lg px-3 py-1.5 text-[var(--fg2)] transition-colors hover:bg-gray-100">
-            首頁
+            Home
           </a>
         </div>
       </div>
@@ -62,7 +63,7 @@ const faviconHref = `${baseUrl}favicon.svg`;
     <slot />
 
     <footer class="mt-16 border-t border-[var(--border)] py-10 text-center text-xs text-[var(--fg2)]">
-      學測知識庫｜整理高中複習內容與跨章節學習地圖
+      Study Atlas · Notes, maps, and review paths
     </footer>
   </body>
 </html>

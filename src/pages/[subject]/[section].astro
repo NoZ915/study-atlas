@@ -27,8 +27,9 @@ const subject = getSubject(subjectId)!;
 const section = getSection(subjectId, sectionId)!;
 const chapter = getChapterForSection(subjectId, sectionId)!;
 const componentKey = `${subjectId}/${sectionId}`;
-const subjectHref = `${import.meta.env.BASE_URL}${subject.id}`;
-const homeHref = import.meta.env.BASE_URL;
+const baseUrl = import.meta.env.BASE_URL;
+const subjectHref = `${baseUrl}${subject.id}`;
+const homeHref = baseUrl;
 
 const hasComponent =
   componentKey === "physics/4-0" ||
@@ -39,7 +40,7 @@ const hasComponent =
   componentKey === "math/1-1";
 ---
 
-<BaseLayout title={`${section.title} | ${subject.title} | 學測知識庫`} description={section.description}>
+<BaseLayout title={`${section.title} | ${subject.title} | Study Atlas`} description={section.description}>
   <section
     class="px-6 py-10 text-center"
     style={`background: linear-gradient(135deg, ${subject.accent} 0%, ${subject.color} 100%);`}
@@ -61,7 +62,7 @@ const hasComponent =
   </section>
 
   <div class="mx-auto max-w-3xl px-4 py-3 text-sm text-[var(--fg2)]">
-    <a href={homeHref} class="hover:underline">首頁</a>
+    <a href={homeHref} class="hover:underline">Home</a>
     <span class="mx-2">/</span>
     <a href={subjectHref} class="hover:underline">{subject.title}</a>
     <span class="mx-2">/</span>
@@ -79,17 +80,18 @@ const hasComponent =
     ) : (
       <div class="rounded-2xl border border-dashed border-[var(--border)] bg-white p-16 text-center">
         <div class="mb-4 text-5xl">{subject.icon}</div>
-        <h2 class="mb-2 text-xl font-bold text-[var(--fg)]">內容準備中</h2>
+        <h2 class="mb-2 text-xl font-bold text-[var(--fg)]">Content Coming Soon</h2>
         <p class="text-sm leading-relaxed text-[var(--fg2)]">
-          這個章節的整理還沒完成。<br />
-          你可以先回到 {subject.title} 頁面查看目前已完成的內容。
+          This section has not been written yet.
+          <br />
+          You can go back to the {subject.title} page to browse the sections that are already available.
         </p>
         <a
           href={subjectHref}
           class="mt-6 inline-block rounded-xl px-6 py-2.5 text-sm font-semibold text-white no-underline"
           style={`background: ${subject.color};`}
         >
-          返回 {subject.title}
+          Back to {subject.title}
         </a>
       </div>
     )}

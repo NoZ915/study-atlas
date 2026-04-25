@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://noz915.github.io',
-  base: '/GSAT',
+  base: '/study-atlas',
   integrations: [react()],
 
   vite: {
