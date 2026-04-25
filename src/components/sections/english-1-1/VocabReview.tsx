@@ -66,7 +66,10 @@ const COLOR = "#1ABC9C";
 const ACCENT = "#148F77";
 const LIGHT = "#E8F8F5";
 const PAGE_SIZE = 20;
-const VOCAB_JSON_URL = `${import.meta.env.BASE_URL}full_vocab_content.json`;
+const BASE_URL = import.meta.env.BASE_URL;
+const withBase = (path: string) =>
+  `${BASE_URL.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+const VOCAB_JSON_URL = withBase("full_vocab_content.json");
 
 const LEVEL_COLOR: Record<number, { bg: string; text: string; label: string }> = {
   1: { bg: "#DCFCE7", text: "#166534", label: "L1" },
