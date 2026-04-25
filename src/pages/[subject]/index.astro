@@ -12,7 +12,8 @@ export function getStaticPaths() {
 const { subject: subjectId } = Astro.params;
 const subject = getSubject(subjectId)!;
 const baseUrl = import.meta.env.BASE_URL;
-const homeHref = baseUrl;
+const withBase = (path = "") => `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+const homeHref = withBase();
 ---
 
 <BaseLayout
@@ -55,7 +56,7 @@ const homeHref = baseUrl;
           <div class="flex flex-col gap-3">
             {chapter.sections.map((section) => (
               <a
-                href={section.ready ? `${baseUrl}${subject.id}/${section.id}` : undefined}
+                href={section.ready ? withBase(`${subject.id}/${section.id}`) : undefined}
                 class={[
                   "rounded-xl border p-5 no-underline transition-all duration-150",
                   section.ready ? "cursor-pointer hover:-translate-y-0.5 hover:shadow-md" : "cursor-not-allowed opacity-60",

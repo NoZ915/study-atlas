@@ -28,8 +28,9 @@ const section = getSection(subjectId, sectionId)!;
 const chapter = getChapterForSection(subjectId, sectionId)!;
 const componentKey = `${subjectId}/${sectionId}`;
 const baseUrl = import.meta.env.BASE_URL;
-const subjectHref = `${baseUrl}${subject.id}`;
-const homeHref = baseUrl;
+const withBase = (path = "") => `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
+const subjectHref = withBase(subject.id);
+const homeHref = withBase();
 
 const hasComponent =
   componentKey === "physics/4-0" ||

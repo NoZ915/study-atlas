@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { SUBJECTS } from "../data/subjects";
 
 const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path = "") => `${baseUrl.replace(/\/$/, "")}/${path.replace(/^\//, "")}`;
 ---
 
 <BaseLayout
@@ -45,7 +46,7 @@ const baseUrl = import.meta.env.BASE_URL;
 
           return (
             <a
-              href={`${baseUrl}${subject.id}`}
+              href={withBase(subject.id)}
               class="group relative overflow-hidden rounded-2xl border no-underline transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
               style={`border-color: ${subject.color}33; background: ${subject.light};`}
             >
