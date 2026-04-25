@@ -1,5 +1,5 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -9,31 +9,32 @@ interface Props {
 
 const {
   title,
-  description = '學測所有科目知識匯集，包含國文、英文、數學、生物、物理、地科、化學，附互動說明與自我測驗。',
+  description = "學測知識庫，整理高中各科重點、圖解、公式與複習內容。",
   ogTitle,
 } = Astro.props;
 
-const siteTitle = title.includes('學測知識庫') ? title : `${title} | 學測知識庫`;
+const siteTitle = title.includes("學測知識庫") ? title : `${title} | 學測知識庫`;
+const baseUrl = import.meta.env.BASE_URL;
+const homeHref = baseUrl;
+const faviconHref = `${baseUrl}favicon.svg`;
 ---
 
 <!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={faviconHref} type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{siteTitle}</title>
     <meta name="description" content={description} />
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={ogTitle ?? siteTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="zh_TW" />
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -42,25 +43,26 @@ const siteTitle = title.includes('學測知識庫') ? title : `${title} | 學測
     />
   </head>
   <body>
-    <!-- Site Nav -->
-    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-[var(--border)]">
-      <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 font-bold text-[var(--fg)] no-underline">
+    <nav class="sticky top-0 z-50 border-b border-[var(--border)] bg-white/90 backdrop-blur">
+      <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+        <a href={homeHref} class="flex items-center gap-2 font-bold text-[var(--fg)] no-underline">
           <span class="text-xl">📚</span>
           <span class="text-base leading-tight">
             學測<span class="text-[var(--accent)]">知識庫</span>
           </span>
         </a>
         <div class="flex items-center gap-1 text-sm">
-          <a href="/" class="px-3 py-1.5 rounded-lg text-[var(--fg2)] hover:bg-gray-100 transition-colors">首頁</a>
+          <a href={homeHref} class="rounded-lg px-3 py-1.5 text-[var(--fg2)] transition-colors hover:bg-gray-100">
+            首頁
+          </a>
         </div>
       </div>
     </nav>
 
     <slot />
 
-    <footer class="border-t border-[var(--border)] py-10 text-center text-xs text-[var(--fg2)] mt-16">
-      學測知識庫 · 涵蓋國文、英文、數學、生物、物理、地科、化學
+    <footer class="mt-16 border-t border-[var(--border)] py-10 text-center text-xs text-[var(--fg2)]">
+      學測知識庫｜整理高中複習內容與跨章節學習地圖
     </footer>
   </body>
 </html>

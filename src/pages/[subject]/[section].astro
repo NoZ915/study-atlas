@@ -1,14 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { SUBJECTS, getSubject, getSection, getChapterForSection } from '../../data/subjects';
-import CircuitReview from '../../components/sections/physics-4-0/CircuitReview';
-import MagneticEffect from '../../components/sections/physics-4-1/MagneticEffect';
-import ElectromagneticInduction from '../../components/sections/physics-4-2/ElectromagneticInduction';
-import CellStructure from '../../components/sections/biology-1-1/CellStructure';
-import VocabReview from '../../components/sections/english-1-1/VocabReview';
-import NumberAndExpression from '../../components/sections/math-1-1/NumberAndExpression';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SUBJECTS, getSubject, getSection, getChapterForSection } from "../../data/subjects";
+import CircuitReview from "../../components/sections/physics-4-0/CircuitReview";
+import MagneticEffect from "../../components/sections/physics-4-1/MagneticEffect";
+import ElectromagneticInduction from "../../components/sections/physics-4-2/ElectromagneticInduction";
+import CellStructure from "../../components/sections/biology-1-1/CellStructure";
+import VocabReview from "../../components/sections/english-1-1/VocabReview";
+import NumberAndExpression from "../../components/sections/math-1-1/NumberAndExpression";
 
-// Generate all section routes
 export function getStaticPaths() {
   const paths = [];
   for (const subject of SUBJECTS) {
@@ -27,76 +26,70 @@ const { subject: subjectId, section: sectionId } = Astro.params;
 const subject = getSubject(subjectId)!;
 const section = getSection(subjectId, sectionId)!;
 const chapter = getChapterForSection(subjectId, sectionId)!;
-
-// Component registry — add new section components here
 const componentKey = `${subjectId}/${sectionId}`;
+const subjectHref = `${import.meta.env.BASE_URL}${subject.id}`;
+const homeHref = import.meta.env.BASE_URL;
+
 const hasComponent =
-  componentKey === 'physics/4-0' ||
-  componentKey === 'physics/4-1' ||
-  componentKey === 'physics/4-2' ||
-  componentKey === 'biology/1-1' ||
-  componentKey === 'english/1-1' ||
-  componentKey === 'math/1-1';
+  componentKey === "physics/4-0" ||
+  componentKey === "physics/4-1" ||
+  componentKey === "physics/4-2" ||
+  componentKey === "biology/1-1" ||
+  componentKey === "english/1-1" ||
+  componentKey === "math/1-1";
 ---
 
-<BaseLayout
-  title={`${section.title} | ${subject.title} | 學測知識庫`}
-  description={section.description}
->
-  <!-- Section hero -->
+<BaseLayout title={`${section.title} | ${subject.title} | 學測知識庫`} description={section.description}>
   <section
-    class="py-10 px-6 text-center"
+    class="px-6 py-10 text-center"
     style={`background: linear-gradient(135deg, ${subject.accent} 0%, ${subject.color} 100%);`}
   >
-    <div class="max-w-3xl mx-auto">
-      <p class="text-xs tracking-widest font-semibold text-white/60 mb-2 uppercase">
+    <div class="mx-auto max-w-3xl">
+      <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-white/60">
         {subject.title} · {chapter.title}
       </p>
-      <h1 class="text-3xl font-extrabold text-white mb-2">{section.title}</h1>
-      <p class="text-sm text-white/75 leading-relaxed max-w-lg mx-auto">{section.description}</p>
+      <h1 class="mb-2 text-3xl font-extrabold text-white">{section.title}</h1>
+      <p class="mx-auto max-w-lg text-sm leading-relaxed text-white/75">{section.description}</p>
       {section.tags && (
-        <div class="flex justify-center gap-2 mt-4 flex-wrap">
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
           {section.tags.map((tag) => (
-            <span class="text-xs px-3 py-1 rounded-full bg-white/20 text-white font-medium">{tag}</span>
+            <span class="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white">{tag}</span>
           ))}
         </div>
       )}
     </div>
   </section>
 
-  <!-- Breadcrumb -->
-  <div class="max-w-3xl mx-auto px-4 py-3 text-sm text-[var(--fg2)]">
-    <a href="/" class="hover:underline">首頁</a>
-    <span class="mx-2">›</span>
-    <a href={`/${subject.id}`} class="hover:underline">{subject.title}</a>
-    <span class="mx-2">›</span>
+  <div class="mx-auto max-w-3xl px-4 py-3 text-sm text-[var(--fg2)]">
+    <a href={homeHref} class="hover:underline">首頁</a>
+    <span class="mx-2">/</span>
+    <a href={subjectHref} class="hover:underline">{subject.title}</a>
+    <span class="mx-2">/</span>
     <span class="font-semibold text-[var(--fg)]">{section.id} {section.title}</span>
   </div>
 
-  <!-- Content -->
-  <main class="max-w-3xl mx-auto px-4 pb-16">
+  <main class="mx-auto max-w-3xl px-4 pb-16">
     {hasComponent ? (
-      componentKey === 'physics/4-0' ? <CircuitReview client:load /> :
-      componentKey === 'physics/4-1' ? <MagneticEffect client:load /> :
-      componentKey === 'physics/4-2' ? <ElectromagneticInduction client:load /> :
-      componentKey === 'math/1-1' ? <NumberAndExpression client:load /> :
-      componentKey === 'english/1-1' ? <VocabReview client:load /> :
+      componentKey === "physics/4-0" ? <CircuitReview client:load /> :
+      componentKey === "physics/4-1" ? <MagneticEffect client:load /> :
+      componentKey === "physics/4-2" ? <ElectromagneticInduction client:load /> :
+      componentKey === "math/1-1" ? <NumberAndExpression client:load /> :
+      componentKey === "english/1-1" ? <VocabReview client:load /> :
       <CellStructure client:load />
     ) : (
-      <!-- Placeholder for sections not yet written -->
       <div class="rounded-2xl border border-dashed border-[var(--border)] bg-white p-16 text-center">
-        <div class="text-5xl mb-4">{subject.icon}</div>
-        <h2 class="text-xl font-bold text-[var(--fg)] mb-2">內容準備中</h2>
-        <p class="text-sm text-[var(--fg2)] leading-relaxed">
-          這個小節的互動內容正在製作中，敬請期待！<br />
-          目前可以先回到{subject.title}專區查看其他已上線的章節。
+        <div class="mb-4 text-5xl">{subject.icon}</div>
+        <h2 class="mb-2 text-xl font-bold text-[var(--fg)]">內容準備中</h2>
+        <p class="text-sm leading-relaxed text-[var(--fg2)]">
+          這個章節的整理還沒完成。<br />
+          你可以先回到 {subject.title} 頁面查看目前已完成的內容。
         </p>
         <a
-          href={`/${subject.id}`}
-          class="inline-block mt-6 px-6 py-2.5 rounded-xl text-sm font-semibold text-white no-underline"
+          href={subjectHref}
+          class="mt-6 inline-block rounded-xl px-6 py-2.5 text-sm font-semibold text-white no-underline"
           style={`background: ${subject.color};`}
         >
-          ← 回到{subject.title}專區
+          返回 {subject.title}
         </a>
       </div>
     )}
