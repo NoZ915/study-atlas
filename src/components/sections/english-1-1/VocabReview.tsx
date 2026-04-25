@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 function speak(word: string) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -66,6 +66,7 @@ const COLOR = "#1ABC9C";
 const ACCENT = "#148F77";
 const LIGHT = "#E8F8F5";
 const PAGE_SIZE = 20;
+const VOCAB_JSON_URL = `${import.meta.env.BASE_URL}full_vocab_content.json`;
 
 const LEVEL_COLOR: Record<number, { bg: string; text: string; label: string }> = {
   1: { bg: "#DCFCE7", text: "#166534", label: "L1" },
@@ -578,7 +579,7 @@ export default function VocabReview() {
   const [qDialogEntry, setQDialogEntry] = useState<VocabEntry | null>(null);
 
   useEffect(() => {
-    fetch("/full_vocab_content.json")
+    fetch(VOCAB_JSON_URL)
       .then((r) => r.json())
       .then((data: VocabEntry[]) => { setVocab(data); setLoading(false); })
       .catch(() => setLoading(false));
