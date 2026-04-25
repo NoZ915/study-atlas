@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SUBJECTS, getSubject } from '../../data/subjects';
+import MathOverview from '../../components/subject/MathOverview.astro';
 
 export function getStaticPaths() {
   return SUBJECTS.map((subject) => ({
@@ -42,6 +43,8 @@ const subject = getSubject(subjectId)!;
 
   <!-- Chapters -->
   <main class="max-w-3xl mx-auto px-4 pb-16">
+    {subject.id === 'math' && <MathOverview />}
+
     {
       subject.chapters.map((chapter) => (
         <div class="mb-10">

@@ -1,0 +1,1160 @@
+---
+import MathChapterAccordion from './MathChapterAccordion.astro';
+
+const axes = [
+  { id: 'foundation', label: '數與代數基礎', short: '代數基礎', color: '#B33D34', bg: '#FDE8E7', order: 1 },
+  { id: 'polynomial', label: '多項式函數與不等式', short: '多項式', color: '#C75C2A', bg: '#FDEDDD', order: 2 },
+  { id: 'exp-log', label: '指對數', short: '指對數', color: '#A44E2A', bg: '#FBE7DE', order: 3 },
+  { id: 'trigonometry', label: '三角與三角函數', short: '三角', color: '#1B6FA0', bg: '#E8F4FD', order: 4 },
+  { id: 'geometry', label: '平面與空間幾何', short: '幾何', color: '#2F7A6B', bg: '#E7F6F2', order: 5 },
+  { id: 'vector', label: '向量', short: '向量', color: '#1A7D44', bg: '#E3F9EC', order: 6 },
+  { id: 'matrix', label: '矩陣與線性轉換', short: '矩陣', color: '#6E59CF', bg: '#EEEAFE', order: 7 },
+  { id: 'sequence', label: '數列與級數', short: '數列', color: '#8A4FFF', bg: '#F2EAFE', order: 8 },
+  { id: 'counting', label: '計數與機率', short: '機率', color: '#7B3DB5', bg: '#F3EAFC', order: 9 },
+  { id: 'statistics', label: '統計與資料分析', short: '統計', color: '#A55F28', bg: '#FDF0E2', order: 10 },
+];
+
+const axisMap = Object.fromEntries(axes.map((axis) => [axis.id, axis]));
+
+const books = [
+  {
+    id: 'book1',
+    label: '第一冊',
+    chapters: [
+      {
+        id: '1',
+        title: '第一章 數與式',
+        items: [
+          { id: '1-1', title: '乘法公式與有理數' },
+          { id: '1-2', title: '根數運算與實數' },
+          { id: '1-3', title: '絕對值' },
+          { id: '1-4', title: '指數與常用對數' },
+        ],
+      },
+      {
+        id: '2',
+        title: '第二章 多項式函數',
+        items: [
+          { id: '2-1', title: '多項式的除法' },
+          { id: '2-2', title: '多項式函數' },
+          { id: '2-3', title: '多項不等式' },
+        ],
+      },
+      {
+        id: '3',
+        title: '第三章 直線與圓',
+        items: [
+          { id: '3-1', title: '座標平面與直線方程式' },
+          { id: '3-2', title: '直線方程式的應用' },
+          { id: '3-3', title: '圓方程式' },
+          { id: '3-4', title: '圓與直線的關係' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'book2',
+    label: '第二冊',
+    chapters: [
+      {
+        id: '4',
+        title: '第四章 數列與級數',
+        items: [
+          { id: '4-1', title: '數列與遞迴關係' },
+          { id: '4-2', title: '級數求和' },
+        ],
+      },
+      {
+        id: '5',
+        title: '第五章 排列組合與古典機率',
+        items: [
+          { id: '5-1', title: '邏輯與集合與計數原理' },
+          { id: '5-2', title: '排列' },
+          { id: '5-3', title: '組合與二項式定理' },
+          { id: '5-4', title: '古典機率與期望值' },
+        ],
+      },
+      {
+        id: '6',
+        title: '第六章 數據分析',
+        items: [
+          { id: '6-1', title: '一維數據分析' },
+          { id: '6-2', title: '相關係數與迴歸直線' },
+        ],
+      },
+      {
+        id: '7',
+        title: '第七章 三角比的性質與應用',
+        items: [
+          { id: '7-1', title: '極座標與三角比的定義' },
+          { id: '7-2', title: '三角比的性質' },
+          { id: '7-3', title: '正弦定理與餘弦定理' },
+          { id: '7-4', title: '反三角與三角測量' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'book3',
+    label: '第三冊',
+    chapters: [
+      {
+        id: '8',
+        title: '第八章 三角函數',
+        items: [
+          { id: '8-1', title: '弧度與扇形與三角比' },
+          { id: '8-2', title: '和差角與倍半角公式' },
+          { id: '8-3', title: '三角函數的圖形與正餘弦的疊合' },
+        ],
+      },
+      {
+        id: '9',
+        title: '第九章 指對數函數',
+        items: [
+          { id: '9-1', title: '指數函數及其圖形' },
+          { id: '9-2', title: '對數符號與對數律' },
+          { id: '9-3', title: '對數函數及其應用' },
+        ],
+      },
+      {
+        id: '10',
+        title: '第十章 平面向量',
+        items: [
+          { id: '10-1', title: '平面向量的加減法與係數積' },
+          { id: '10-2', title: '平面向量的內積' },
+          { id: '10-3', title: '直線的向量性質與二階行列式' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'book4',
+    label: '第四冊',
+    chapters: [
+      {
+        id: '11',
+        title: '第十一章 空間向量',
+        items: [
+          { id: '11-1', title: '空間概念' },
+          { id: '11-2', title: '空間座標與向量' },
+          { id: '11-3', title: '空間向量的內積' },
+          { id: '11-4', title: '外積與三階行列式' },
+        ],
+      },
+      {
+        id: '12',
+        title: '第十二章 空間中的平面與直線',
+        items: [
+          { id: '12-1', title: '空間中的平面' },
+          { id: '12-2', title: '空間中的直線方程式' },
+        ],
+      },
+      {
+        id: '13',
+        title: '第十三章 條件機率與貝式定理',
+        items: [
+          { id: '13-1', title: '條件機率' },
+          { id: '13-2', title: '獨立事件' },
+        ],
+      },
+      {
+        id: '14',
+        title: '第十四章 矩陣',
+        items: [
+          { id: '14-1', title: '聯立方程的矩陣表達' },
+          { id: '14-2', title: '矩陣的四則運算' },
+          { id: '14-3', title: '反方陣與轉移方陣' },
+          { id: '14-4', title: '平面的線性轉換' },
+        ],
+      },
+    ],
+  },
+];
+
+const itemMeta = {
+  '1-1': { chapter: '第一章 數與式', primary: 'foundation', related: [], reason: '代數運算基礎' },
+  '1-2': { chapter: '第一章 數與式', primary: 'foundation', related: [], reason: '數系與根式運算' },
+  '1-3': { chapter: '第一章 數與式', primary: 'foundation', related: [], reason: '實數距離、不等式基礎' },
+  '1-4': { chapter: '第一章 數與式', primary: 'exp-log', related: [], reason: '指數、對數的基本運算' },
+  '2-1': { chapter: '第二章 多項式函數', primary: 'polynomial', related: [], reason: '多項式代數操作' },
+  '2-2': { chapter: '第二章 多項式函數', primary: 'polynomial', related: ['foundation'], reason: '多項式與函數圖形' },
+  '2-3': { chapter: '第二章 多項式函數', primary: 'polynomial', related: ['foundation', 'exp-log'], reason: '函數正負與不等式' },
+  '3-1': { chapter: '第三章 直線與圓', primary: 'geometry', related: [], reason: '解析幾何基礎' },
+  '3-2': { chapter: '第三章 直線與圓', primary: 'geometry', related: [], reason: '斜率、距離、平行垂直' },
+  '3-3': { chapter: '第三章 直線與圓', primary: 'geometry', related: [], reason: '用方程式描述圓' },
+  '3-4': { chapter: '第三章 直線與圓', primary: 'geometry', related: [], reason: '相交、相切、距離判斷' },
+  '4-1': { chapter: '第四章 數列與級數', primary: 'sequence', related: [], reason: '離散型規律' },
+  '4-2': { chapter: '第四章 數列與級數', primary: 'sequence', related: [], reason: '離散資料的總和' },
+  '5-1': { chapter: '第五章 排列組合與古典機率', primary: 'counting', related: [], reason: '計數與機率的語言基礎' },
+  '5-2': { chapter: '第五章 排列組合與古典機率', primary: 'counting', related: [], reason: '有順序的計數' },
+  '5-3': { chapter: '第五章 排列組合與古典機率', primary: 'counting', related: ['foundation', 'sequence'], reason: '無順序計數、二項式展開' },
+  '5-4': { chapter: '第五章 排列組合與古典機率', primary: 'counting', related: [], reason: '用計數結果算機率' },
+  '6-1': { chapter: '第六章 數據分析', primary: 'statistics', related: [], reason: '平均、標準差、資料分布' },
+  '6-2': { chapter: '第六章 數據分析', primary: 'statistics', related: [], reason: '兩變量資料與趨勢分析' },
+  '7-1': { chapter: '第七章 三角比的性質與應用', primary: 'trigonometry', related: [], reason: '從座標與角度定義三角比' },
+  '7-2': { chapter: '第七章 三角比的性質與應用', primary: 'trigonometry', related: [], reason: '基本三角關係' },
+  '7-3': { chapter: '第七章 三角比的性質與應用', primary: 'trigonometry', related: [], reason: '三角形邊角關係' },
+  '7-4': { chapter: '第七章 三角比的性質與應用', primary: 'trigonometry', related: [], reason: '角度反推與測量應用' },
+  '8-1': { chapter: '第八章 三角函數', primary: 'trigonometry', related: [], reason: '弧度制與圓上的三角' },
+  '8-2': { chapter: '第八章 三角函數', primary: 'trigonometry', related: [], reason: '三角公式系統' },
+  '8-3': { chapter: '第八章 三角函數', primary: 'trigonometry', related: ['polynomial'], reason: '三角函數圖形與週期' },
+  '9-1': { chapter: '第九章 指對數函數', primary: 'exp-log', related: [], reason: '指數從運算延伸到函數' },
+  '9-2': { chapter: '第九章 指對數函數', primary: 'exp-log', related: [], reason: '對數運算規則' },
+  '9-3': { chapter: '第九章 指對數函數', primary: 'exp-log', related: [], reason: '對數函數與應用題' },
+  '10-1': { chapter: '第十章 平面向量', primary: 'vector', related: [], reason: '向量基本運算' },
+  '10-2': { chapter: '第十章 平面向量', primary: 'vector', related: [], reason: '長度、角度、垂直' },
+  '10-3': { chapter: '第十章 平面向量', primary: 'vector', related: ['geometry'], reason: '向量處理直線與面積' },
+  '11-1': { chapter: '第十一章 空間向量', primary: 'geometry', related: ['vector'], reason: '從平面進入三維空間' },
+  '11-2': { chapter: '第十一章 空間向量', primary: 'vector', related: ['geometry'], reason: '空間中的座標與向量' },
+  '11-3': { chapter: '第十一章 空間向量', primary: 'vector', related: ['geometry'], reason: '空間中的長度、角度、垂直' },
+  '11-4': { chapter: '第十一章 空間向量', primary: 'vector', related: [], reason: '法向量、面積、體積' },
+  '12-1': { chapter: '第十二章 空間中的平面與直線', primary: 'geometry', related: ['vector'], reason: '平面方程式' },
+  '12-2': { chapter: '第十二章 空間中的平面與直線', primary: 'geometry', related: ['vector'], reason: '空間直線的表示法' },
+  '13-1': { chapter: '第十三章 條件機率與貝式定理', primary: 'counting', related: [], reason: '已知某事件發生下的機率' },
+  '13-2': { chapter: '第十三章 條件機率與貝式定理', primary: 'counting', related: [], reason: '事件之間是否互相影響' },
+  '14-1': { chapter: '第十四章 矩陣', primary: 'matrix', related: [], reason: '用矩陣表示方程組' },
+  '14-2': { chapter: '第十四章 矩陣', primary: 'matrix', related: [], reason: '矩陣基本運算' },
+  '14-3': { chapter: '第十四章 矩陣', primary: 'matrix', related: [], reason: '解方程與狀態轉移' },
+  '14-4': { chapter: '第十四章 矩陣', primary: 'matrix', related: ['vector', 'geometry'], reason: '矩陣與平面幾何變換' },
+} as const;
+
+const chapterAxisMap = new Map<string, string[]>();
+for (const book of books) {
+  for (const chapter of book.chapters) {
+    const axesForChapter = Array.from(
+      new Set(chapter.items.flatMap((item) => [itemMeta[item.id as keyof typeof itemMeta].primary, ...itemMeta[item.id as keyof typeof itemMeta].related])),
+    );
+    chapterAxisMap.set(chapter.id, axesForChapter);
+  }
+}
+
+const booksWithAxes = books.map((book) => ({
+  ...book,
+  chapters: book.chapters.map((chapter) => ({
+    ...chapter,
+    axes: chapterAxisMap.get(chapter.id) ?? [],
+  })),
+}));
+
+const axisGroups = axes.map((axis) => ({
+  ...axis,
+  items: books
+    .flatMap((book) =>
+      book.chapters.flatMap((chapter) =>
+        chapter.items
+          .filter((item) => itemMeta[item.id as keyof typeof itemMeta].primary === axis.id)
+          .map((item) => ({
+            ...item,
+            chapter: chapter.title,
+            book: book.label,
+            reason: itemMeta[item.id as keyof typeof itemMeta].reason,
+          })),
+      ),
+    ),
+}));
+
+const themePaths = [
+  {
+    id: 'foundation-to-polynomial',
+    title: '數與代數 → 多項式',
+    summary: '從代數底層開始，接到多項式函數與不等式。',
+    steps: [
+      { id: '1-1', note: '先從最基本的代數運算開始。' },
+      { id: '1-2', note: '把數系擴張到根式與實數。' },
+      { id: '1-3', note: '補上距離與不等式會用到的絕對值。' },
+      { id: '2-1', note: '進入多項式的代數操作。' },
+      { id: '2-2', note: '把多項式提升到函數觀點。' },
+      { id: '2-3', note: '最後接到多項不等式與正負區間判斷。' },
+    ],
+  },
+  {
+    id: 'exp-log',
+    title: '指對數',
+    summary: '把基本指數對數運算接成完整的指對數函數。',
+    steps: [
+      { id: '1-4', note: '先有指數與常用對數的運算基礎。' },
+      { id: '9-1', note: '把指數從運算推進到函數圖形。' },
+      { id: '9-2', note: '整理對數符號與對數律。' },
+      { id: '9-3', note: '收束到對數函數與應用情境。' },
+    ],
+  },
+  {
+    id: 'geometry-to-space',
+    title: '幾何 → 向量 → 空間',
+    summary: '從平面座標、直線與圓，延伸到向量與空間直線平面。',
+    steps: [
+      { id: '3-1', note: '先用座標平面建立解析幾何基礎。' },
+      { id: '3-2', note: '把直線方程式常見應用做熟。' },
+      { id: '3-3', note: '從直線延伸到圓的方程式。' },
+      { id: '3-4', note: '整合直線與圓的圖形關係。' },
+      { id: '10-1', note: '改用向量處理平面中的位移與方向。' },
+      { id: '10-2', note: '加入內積處理長度、角度與垂直。' },
+      { id: '10-3', note: '把向量正式接回直線與面積問題。' },
+      { id: '11-1', note: '從平面幾何進入三維空間觀念。' },
+      { id: '11-2', note: '建立空間座標與向量表示。' },
+      { id: '11-3', note: '延續內積到空間中的角度與垂直。' },
+      { id: '11-4', note: '再加入外積與三階行列式。' },
+      { id: '12-1', note: '用向量工具處理空間中的平面。' },
+      { id: '12-2', note: '最後整合空間中的直線表示。' },
+    ],
+  },
+  {
+    id: 'trigonometry',
+    title: '三角',
+    summary: '從三角比、三角定理一路接到三角函數圖形。',
+    steps: [
+      { id: '7-1', note: '先從角度與座標定義三角比。' },
+      { id: '7-2', note: '整理基本三角關係。' },
+      { id: '7-3', note: '把三角比用到邊角關係。' },
+      { id: '7-4', note: '往測量與反推問題延伸。' },
+      { id: '8-1', note: '再把角度推進到弧度與圓上的表示。' },
+      { id: '8-2', note: '建立三角公式系統。' },
+      { id: '8-3', note: '最後收束到三角函數圖形與週期。' },
+    ],
+  },
+  {
+    id: 'matrix',
+    title: '矩陣與線性轉換',
+    summary: '矩陣本身獨立成線，但 14-4 會回扣向量與幾何。',
+    steps: [
+      { id: '14-1', note: '先從聯立方程的矩陣表達切入。' },
+      { id: '14-2', note: '建立矩陣的基本運算規則。' },
+      { id: '14-3', note: '再延伸到反方陣與轉移方陣。' },
+      { id: '14-4', note: '最後接到平面上的線性轉換。' },
+    ],
+  },
+  {
+    id: 'sequence',
+    title: '數列與級數',
+    summary: '先抓規律，再進到總和。',
+    steps: [
+      { id: '4-1', note: '先掌握項與遞迴之間的規律。' },
+      { id: '4-2', note: '再從單項推進到整體求和。' },
+    ],
+  },
+  {
+    id: 'counting',
+    title: '計數與機率',
+    summary: '從集合與計數原理，接到機率與條件機率。',
+    steps: [
+      { id: '5-1', note: '先建立集合與計數語言。' },
+      { id: '5-2', note: '處理有順序的計數。' },
+      { id: '5-3', note: '接著處理無順序的組合。' },
+      { id: '5-4', note: '把計數結果轉成機率與期望值。' },
+      { id: '13-1', note: '再延伸到條件機率。' },
+      { id: '13-2', note: '最後判斷事件的獨立性。' },
+    ],
+  },
+  {
+    id: 'statistics',
+    title: '統計與資料分析',
+    summary: '集中整理資料分布、相關係數與迴歸。',
+    steps: [
+      { id: '6-1', note: '先整理單變量資料的分布與代表值。' },
+      { id: '6-2', note: '再進入兩變量資料與迴歸直線。' },
+    ],
+  },
+];
+
+const stepLookup = new Map(
+  books.flatMap((book) =>
+    book.chapters.flatMap((chapter) =>
+      chapter.items.map((item) => [
+        item.id,
+        {
+          ...item,
+          chapter: chapter.title,
+          book: book.label,
+        },
+      ]),
+    ),
+  ),
+);
+
+const themePathsExpanded = themePaths.map((path) => ({
+  ...path,
+  steps: path.steps.map((step) => ({
+    ...stepLookup.get(step.id)!,
+    note: step.note,
+  })),
+}));
+
+const questTypeMeta = {
+  start: { label: '起始任務', color: '#B33D34', bg: '#FDE8E7' },
+  main: { label: '主線任務', color: '#1B6FA0', bg: '#E8F4FD' },
+  side: { label: '支線任務', color: '#7B3DB5', bg: '#F3EAFC' },
+  cross: { label: '交會任務', color: '#2F7A6B', bg: '#E7F6F2' },
+} as const;
+
+const questLines = [
+  {
+    id: 'start-zone',
+    title: '起始區：數與代數基礎',
+    summary: '所有路線的起點，先補齊基本術語、數系與距離觀念。',
+    tone: { color: '#B33D34', bg: '#FDE8E7' },
+    steps: [
+      { order: '1', id: '1-1', note: '最底層的代數運算，後面多數單元都會反覆用到。', questType: 'start', prerequisites: [] },
+      { order: '2', id: '1-2', note: '把數系擴張到根式與實數，幾何與三角會用到。', questType: 'start', prerequisites: ['1-1'] },
+      { order: '3', id: '1-3', note: '補上距離與不等式的核心觀念。', questType: 'start', prerequisites: ['1-2'] },
+    ],
+  },
+  {
+    id: 'main-a',
+    title: '主線 A：多項式與函數基礎',
+    summary: '從多項式運算進到函數，再接到不等式判斷。',
+    tone: { color: '#C75C2A', bg: '#FDEDDD' },
+    steps: [
+      { order: 'A1', id: '2-1', note: '先學多項式的運算與因式結構。', questType: 'main', prerequisites: ['1-1'] },
+      { order: 'A2', id: '2-2', note: '把多項式提升成函數與圖形觀點。', questType: 'main', prerequisites: ['2-1'] },
+      { order: 'A3', id: '2-3', note: '整合絕對值與函數圖形，處理正負區間。', questType: 'main', prerequisites: ['1-3', '2-2'] },
+    ],
+  },
+  {
+    id: 'main-b',
+    title: '主線 B：指對數線',
+    summary: '先有基本運算，再進入指數函數、對數律與應用。',
+    tone: { color: '#A44E2A', bg: '#FBE7DE' },
+    steps: [
+      { order: 'B1', id: '1-4', note: '先建立指數與對數的運算底層。', questType: 'main', prerequisites: ['1-1', '1-2'] },
+      { order: 'B2', id: '9-1', note: '把指數觀念升級成函數圖形。', questType: 'main', prerequisites: ['1-4'] },
+      { order: 'B3', id: '9-2', note: '對數符號與對數律在這裡補完整。', questType: 'main', prerequisites: ['1-4'] },
+      { order: 'B4', id: '9-3', note: '最後把對數推到函數與應用題。', questType: 'main', prerequisites: ['9-1', '9-2'] },
+    ],
+  },
+  {
+    id: 'main-c',
+    title: '主線 C：平面幾何 → 向量 → 空間幾何',
+    summary: '最完整的一條主線，從座標平面一路推到空間中的直線與平面。',
+    tone: { color: '#2F7A6B', bg: '#E7F6F2' },
+    steps: [
+      { order: 'C1', id: '3-1', note: '解析幾何的入口，座標平面與直線先站穩。', questType: 'main', prerequisites: ['1-2', '1-3'] },
+      { order: 'C2', id: '3-2', note: '把直線方程式的斜率、距離和平行垂直做熟。', questType: 'main', prerequisites: ['3-1'] },
+      { order: 'C3', id: '3-3', note: '從直線延伸到圓的方程式。', questType: 'main', prerequisites: ['3-1'] },
+      { order: 'C4', id: '3-4', note: '直線與圓正式交會，開始整合圖形關係。', questType: 'main', prerequisites: ['3-2', '3-3'] },
+      { order: 'C5', id: '10-1', note: '切換到向量語言，處理位移與方向。', questType: 'main', prerequisites: ['3-1'] },
+      { order: 'C6', id: '10-2', note: '內積接上長度、角度與垂直。', questType: 'main', prerequisites: ['10-1', '7-2'] },
+      { order: 'C7', id: '10-3', note: '把向量拿回直線與面積問題。', questType: 'main', prerequisites: ['3-2', '10-2'] },
+      { order: 'C8', id: '11-1', note: '先建立三維空間的基本感。', questType: 'main', prerequisites: ['3-1'] },
+      { order: 'C9', id: '11-2', note: '空間座標與向量正式接軌。', questType: 'main', prerequisites: ['10-1', '11-1'] },
+      { order: 'C10', id: '11-3', note: '把內積延伸到空間中的長度與角度。', questType: 'main', prerequisites: ['10-2', '11-2'] },
+      { order: 'C11', id: '11-4', note: '外積和三階行列式用來處理方向、面積與體積。', questType: 'main', prerequisites: ['11-3'] },
+      { order: 'C12', id: '12-1', note: '空間中的平面雖是幾何，但常靠向量工具建立。', questType: 'cross', prerequisites: ['11-3', '11-4'] },
+      { order: 'C13', id: '12-2', note: '最後把空間直線方程式接回整條空間主線。', questType: 'cross', prerequisites: ['11-2', '12-1'] },
+    ],
+  },
+  {
+    id: 'main-d',
+    title: '主線 D：三角線',
+    summary: '從三角比、定理一路接到三角函數圖形。',
+    tone: { color: '#1B6FA0', bg: '#E8F4FD' },
+    steps: [
+      { order: 'D1', id: '7-1', note: '從座標平面延伸到角度與三角比。', questType: 'main', prerequisites: ['3-1'] },
+      { order: 'D2', id: '7-2', note: '三角比的性質是後面所有三角工具的基礎。', questType: 'main', prerequisites: ['7-1'] },
+      { order: 'D3', id: '7-3', note: '把三角比推進到三角形邊角關係。', questType: 'main', prerequisites: ['7-2'] },
+      { order: 'D4', id: '7-4', note: '反三角與測量應用在這裡補齊。', questType: 'main', prerequisites: ['7-3'] },
+      { order: 'D5', id: '8-1', note: '從度數轉到弧度，接上圓與扇形。', questType: 'main', prerequisites: ['7-2'] },
+      { order: 'D6', id: '8-2', note: '把和差角、倍角、半角公式系統化。', questType: 'main', prerequisites: ['8-1'] },
+      { order: 'D7', id: '8-3', note: '三角函數圖形同時會借到函數圖形觀念。', questType: 'cross', prerequisites: ['8-2', '9-1'] },
+    ],
+  },
+  {
+    id: 'main-e',
+    title: '主線 E：矩陣與線性轉換',
+    summary: '代數感最強的一條線，但最後會和向量與幾何交會。',
+    tone: { color: '#6E59CF', bg: '#EEEAFE' },
+    steps: [
+      { order: 'E1', id: '14-1', note: '從熟悉的聯立方程切進矩陣表示。', questType: 'main', prerequisites: ['1-1'] },
+      { order: 'E2', id: '14-2', note: '先把矩陣的四則運算練熟。', questType: 'main', prerequisites: ['14-1'] },
+      { order: 'E3', id: '14-3', note: '反方陣和轉移方陣把矩陣推到解方程與狀態變化。', questType: 'main', prerequisites: ['14-2'] },
+      { order: 'E4', id: '14-4', note: '線性轉換是矩陣和向量真正交會的地方。', questType: 'cross', prerequisites: ['10-1', '14-2'] },
+    ],
+  },
+  {
+    id: 'side-f',
+    title: '支線 F：數列與級數',
+    summary: '相對獨立，但很適合早點建立規律感。',
+    tone: { color: '#8A4FFF', bg: '#F2EAFE' },
+    steps: [
+      { order: 'F1', id: '4-1', note: '先看規律、遞迴與項數。', questType: 'side', prerequisites: ['1-1'] },
+      { order: 'F2', id: '4-2', note: '再把每一項推進到總和。', questType: 'side', prerequisites: ['4-1'] },
+    ],
+  },
+  {
+    id: 'side-g',
+    title: '支線 G：計數與機率',
+    summary: '從集合語言進到排列組合，再接機率與條件機率。',
+    tone: { color: '#7B3DB5', bg: '#F3EAFC' },
+    steps: [
+      { order: 'G1', id: '5-1', note: '先補集合、邏輯與計數原理的語言。', questType: 'side', prerequisites: ['1-1'] },
+      { order: 'G2', id: '5-2', note: '排列先處理有順序的計數。', questType: 'side', prerequisites: ['5-1'] },
+      { order: 'G3', id: '5-3', note: '組合與二項式會連回多項式運算。', questType: 'side', prerequisites: ['5-2', '2-1'] },
+      { order: 'G4', id: '5-4', note: '把前面的計數結果拿來算機率與期望值。', questType: 'side', prerequisites: ['5-2', '5-3'] },
+      { order: 'G5', id: '13-1', note: '條件機率正式引入「已知某事發生」的觀念。', questType: 'side', prerequisites: ['5-4'] },
+      { order: 'G6', id: '13-2', note: '獨立事件用來判斷事件是否互相影響。', questType: 'side', prerequisites: ['13-1'] },
+    ],
+  },
+  {
+    id: 'side-h',
+    title: '支線 H：統計與資料分析',
+    summary: '資料讀法本身獨立，但迴歸直線會回扣到直線方程式。',
+    tone: { color: '#A55F28', bg: '#FDF0E2' },
+    steps: [
+      { order: 'H1', id: '6-1', note: '先掌握平均、標準差與分布。', questType: 'side', prerequisites: ['1-1'] },
+      { order: 'H2', id: '6-2', note: '從一維資料延伸到雙變量與趨勢線。', questType: 'side', prerequisites: ['6-1', '3-2'] },
+    ],
+  },
+] as const;
+
+const questStepIndex = new Map(
+  questLines.flatMap((line) =>
+    line.steps.map((step) => [
+      step.id,
+      {
+        ...step,
+        lineId: line.id,
+        lineTitle: line.title,
+        lineSummary: line.summary,
+        tone: line.tone,
+      },
+    ]),
+  ),
+);
+
+const unlockMap = new Map<string, string[]>();
+for (const line of questLines) {
+  for (const step of line.steps) {
+    unlockMap.set(step.id, []);
+  }
+}
+for (const line of questLines) {
+  for (const step of line.steps) {
+    step.prerequisites.forEach((prerequisiteId) => {
+      const unlocks = unlockMap.get(prerequisiteId) ?? [];
+      unlocks.push(step.id);
+      unlockMap.set(prerequisiteId, unlocks);
+    });
+  }
+}
+
+const questLinesExpanded = questLines.map((line) => ({
+  ...line,
+  steps: line.steps.map((step) => ({
+    ...stepLookup.get(step.id)!,
+    order: step.order,
+    note: step.note,
+    questType: step.questType,
+    prerequisites: step.prerequisites.map((id) => stepLookup.get(id)!),
+    unlocks: (unlockMap.get(step.id) ?? []).map((id) => stepLookup.get(id)!),
+  })),
+}));
+
+const questStats = {
+  total: questLinesExpanded.reduce((sum, line) => sum + line.steps.length, 0),
+  start: questLinesExpanded.flatMap((line) => line.steps).filter((step) => step.questType === 'start').length,
+  main: questLinesExpanded.flatMap((line) => line.steps).filter((step) => step.questType === 'main').length,
+  side: questLinesExpanded.flatMap((line) => line.steps).filter((step) => step.questType === 'side').length,
+  cross: questLinesExpanded.flatMap((line) => line.steps).filter((step) => step.questType === 'cross').length,
+};
+
+const questBoardSections = [
+  {
+    id: 'start',
+    title: '起始區',
+    summary: '先把底層運算和基本觀念點亮，後面大部分路線才會解鎖。',
+    lines: questLinesExpanded.filter((line) => line.id === 'start-zone'),
+  },
+  {
+    id: 'main',
+    title: '主線區',
+    summary: '核心知識線，建議把 A 到 D 先打通，再回頭補矩陣線。',
+    lines: questLinesExpanded.filter((line) => ['main-a', 'main-b', 'main-c', 'main-d'].includes(line.id)),
+  },
+  {
+    id: 'late',
+    title: '後期解鎖',
+    summary: '矩陣與線性轉換比較像後期支援職業，和向量、幾何交會最深。',
+    lines: questLinesExpanded.filter((line) => line.id === 'main-e'),
+  },
+  {
+    id: 'side',
+    title: '支線區',
+    summary: '可以和主線並行練，適合穿插複習，不需要完全等主線結束才開始。',
+    lines: questLinesExpanded.filter((line) => ['side-f', 'side-g', 'side-h'].includes(line.id)),
+  },
+] as const;
+
+const axisModalData = Object.fromEntries(
+  axisGroups.map((group) => [
+    group.id,
+    {
+      label: group.label,
+      color: group.color,
+      bg: group.bg,
+      items: group.items,
+    },
+  ]),
+);
+
+const itemModalData: Record<
+  string,
+  {
+    title: string;
+    chapter: string;
+    primary: string;
+    related: string[];
+    quest?: {
+      lineTitle: string;
+      lineSummary: string;
+      questType: keyof typeof questTypeMeta;
+      prerequisites: { id: string; title: string }[];
+      unlocks: { id: string; title: string }[];
+    };
+    paths: { title: string; steps: { id: string; title: string; note: string }[]; activeIndex: number }[];
+  }
+> = {};
+
+for (const [id, meta] of Object.entries(itemMeta)) {
+  const step = stepLookup.get(id)!;
+  itemModalData[id] = {
+    title: step.title,
+    chapter: meta.chapter,
+    primary: meta.primary,
+    related: meta.related,
+    quest: undefined,
+    paths: [],
+  };
+}
+
+for (const [id, quest] of questStepIndex.entries()) {
+  itemModalData[id].quest = {
+    lineTitle: quest.lineTitle,
+    lineSummary: quest.lineSummary,
+    questType: quest.questType,
+    prerequisites: quest.prerequisites.map((prerequisiteId) => {
+      const prerequisite = stepLookup.get(prerequisiteId)!;
+      return { id: prerequisite.id, title: prerequisite.title };
+    }),
+    unlocks: (unlockMap.get(id) ?? []).map((unlockId) => {
+      const unlock = stepLookup.get(unlockId)!;
+      return { id: unlock.id, title: unlock.title };
+    }),
+  };
+}
+
+for (const path of themePathsExpanded) {
+  path.steps.forEach((step, index) => {
+    itemModalData[step.id].paths.push({
+      title: path.title,
+      steps: path.steps.map((pathStep) => ({ id: pathStep.id, title: pathStep.title, note: pathStep.note })),
+      activeIndex: index,
+    });
+  });
+}
+
+const axisModalJson = JSON.stringify(axisModalData);
+const itemModalJson = JSON.stringify(itemModalData);
+---
+
+<section class="mb-12 overflow-hidden rounded-[28px] border border-[#e8ddd7] bg-white shadow-[0_16px_48px_rgba(113,71,46,0.08)]" id="math-overview">
+  <div class="relative overflow-hidden border-b border-[#f0e5de] bg-[linear-gradient(135deg,_#fff8f2_0%,_#fef1e8_48%,_#fbe4db_100%)] px-6 py-8 md:px-8">
+    <div class="absolute -right-10 top-0 h-32 w-32 rounded-full bg-[#e2574c]/10 blur-2xl"></div>
+    <div class="absolute bottom-0 left-0 h-24 w-24 rounded-full bg-[#f2994a]/15 blur-2xl"></div>
+    <div class="relative">
+      <p class="mb-2 text-xs font-bold tracking-[0.28em] text-[#b33d34]">MATH MAP</p>
+      <h2 class="text-2xl font-extrabold text-[#54241f] md:text-3xl">數學統整區塊</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-7 text-[#6d514a] md:text-[15px]">
+        這版改成以小節為核心整理。主軸式分類和主題延伸都直接對到 `1-1`、`10-3`、`14-4` 這種粒度，並補上交叉關聯資訊。
+      </p>
+    </div>
+  </div>
+
+  <div class="border-b border-[#f0e5de] px-6 py-4 md:px-8">
+    <div class="flex flex-wrap gap-2" role="tablist" aria-label="數學統整分頁">
+      <button type="button" data-tab-trigger data-tab="book" class="rounded-full bg-[#b33d34] px-4 py-2 text-sm font-bold text-white">冊次排序</button>
+      <button type="button" data-tab-trigger data-tab="theme" class="rounded-full bg-white px-4 py-2 text-sm font-bold text-[#8b6d63] ring-1 ring-[#eadfd8]">主軸式排序</button>
+      <button type="button" data-tab-trigger data-tab="path" class="rounded-full bg-white px-4 py-2 text-sm font-bold text-[#8b6d63] ring-1 ring-[#eadfd8]">主題延伸</button>
+      <button type="button" data-tab-trigger data-tab="quest" class="rounded-full bg-white px-4 py-2 text-sm font-bold text-[#8b6d63] ring-1 ring-[#eadfd8]">任務地圖</button>
+    </div>
+  </div>
+
+  <div data-tab-panel="book" class="px-6 py-8 md:px-8">
+    <div class="mb-4">
+      <h3 class="text-lg font-extrabold text-[#2a211d]">冊次排序</h3>
+      <p class="mt-1 text-sm text-[#7a655f]">照四冊走。章節預設收合，點 badge 可看對應主軸的小節總表。</p>
+    </div>
+
+    <div class="space-y-4">
+      {booksWithAxes.map((book) => (
+        <article class="rounded-[22px] border border-[#efe3dd] bg-[#fffaf7] p-5">
+          <p class="text-sm font-extrabold text-[#b33d34]">{book.label}</p>
+          <div class="mt-4 space-y-3">
+            {book.chapters.map((chapter) => (
+              <MathChapterAccordion chapter={chapter} axisMap={axisMap} showAxisButtons={true} />
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div data-tab-panel="theme" class="hidden px-6 py-8 md:px-8">
+    <div class="mb-4">
+      <h3 class="text-lg font-extrabold text-[#2a211d]">主軸式排序</h3>
+      <p class="mt-1 text-sm text-[#7a655f]">依你新的十個主軸重排，小節按主軸順序列出。</p>
+    </div>
+
+    <div class="space-y-4">
+      {axisGroups.map((group) => (
+        <details class="rounded-[24px] border" style={`border-color:${group.color}26; background:${group.bg};`}>
+          <summary class="cursor-pointer list-none px-5 py-4">
+            <div class="flex items-center justify-between gap-3">
+              <div class="text-lg font-extrabold" style={`color:${group.color};`}>
+                {group.label}
+              </div>
+              <div class="rounded-full bg-white/80 px-3 py-1 text-xs font-bold" style={`color:${group.color};`}>
+                {group.items.length} 小節
+              </div>
+            </div>
+          </summary>
+
+          <div class="border-t border-white/70 px-5 py-4">
+            <div class="grid gap-3 sm:grid-cols-2">
+              {group.items.map((item) => (
+                <button
+                  type="button"
+                  data-item-modal={item.id}
+                  class="rounded-xl border border-[#f0e4de] bg-[#fffaf7] px-3 py-2 text-left transition-colors hover:bg-[#fff4ee]"
+                >
+                  <div class="text-xs font-extrabold" style={`color:${group.color};`}>{item.id}</div>
+                  <div class="mt-1 text-sm font-semibold text-[#584742]">{item.title}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <div data-tab-panel="path" class="hidden px-6 py-8 md:px-8">
+    <div class="mb-4">
+      <h3 class="text-lg font-extrabold text-[#2a211d]">主題延伸</h3>
+      <p class="mt-1 text-sm text-[#7a655f]">把跨冊內容接成學習線，顯示的是「延伸順序」，不是原本章節順序。</p>
+    </div>
+
+    <div class="space-y-4">
+      {themePathsExpanded.map((path, pathIndex) => (
+        <details class="rounded-[24px] border border-[#efe3dd] bg-[#fffaf7]">
+          <summary class="cursor-pointer list-none px-5 py-4">
+            <div class="text-lg font-extrabold text-[#3a2f2b]">
+              {pathIndex + 1}. {path.title}
+            </div>
+          </summary>
+
+          <div class="border-t border-[#f1e6df] px-5 py-4">
+            <p class="mb-4 text-sm leading-7 text-[#6c5b55]">{path.summary}</p>
+            <div class="space-y-3">
+              {path.steps.map((step, index) => (
+                <div class="flex items-start gap-3">
+                  <button
+                    type="button"
+                    data-item-modal={step.id}
+                    class="flex min-w-0 flex-1 items-start gap-3 rounded-2xl border border-[#efe4de] bg-white px-4 py-3 text-left transition-colors hover:bg-[#fff4ee]"
+                  >
+                    <div class="mt-0.5 rounded-full bg-[#fde8e7] px-2 py-1 text-xs font-extrabold text-[#b33d34]">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div class="font-semibold text-[#3f332f]">{step.id} {step.title}</div>
+                      <div class="mt-1 text-sm leading-6 text-[#7a655f]">{step.note}</div>
+                    </div>
+                  </button>
+                  {index < path.steps.length - 1 && (
+                    <div class="pt-4 text-sm font-extrabold text-[#c47a35]">→</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+
+  <div data-tab-panel="quest" class="hidden px-6 py-8 md:px-8">
+    <div class="mb-4">
+      <h3 class="text-lg font-extrabold text-[#2a211d]">任務地圖</h3>
+      <p class="mt-1 text-sm text-[#7a655f]">這裡不再只是統整表，而是把數學拆成一張可解鎖的技能樹。先看起始區，再決定主線和支線怎麼並行。</p>
+    </div>
+
+    <div class="mb-6 overflow-hidden rounded-[26px] border border-[#eadfd8] bg-[linear-gradient(135deg,_#2f2420_0%,_#53362d_52%,_#7d4f3d_100%)] p-5 text-white shadow-[0_20px_60px_rgba(67,37,25,0.22)]">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-2xl">
+          <div class="text-xs font-bold tracking-[0.28em] text-white/70">QUEST BOARD</div>
+          <div class="mt-2 text-2xl font-extrabold">高中數學技能樹</div>
+          <p class="mt-2 text-sm leading-7 text-white/78">
+            先破完起始區，再選主線。支線可以穿插打，交會任務通常代表你需要跨章節的前置知識。
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="rounded-2xl border border-white/12 bg-white/8 px-4 py-3">
+            <div class="text-[11px] font-bold tracking-[0.18em] text-white/60">TOTAL</div>
+            <div class="mt-1 text-2xl font-extrabold">{questStats.total}</div>
+            <div class="text-xs text-white/70">全部節點</div>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/8 px-4 py-3">
+            <div class="text-[11px] font-bold tracking-[0.18em] text-white/60">MAIN</div>
+            <div class="mt-1 text-2xl font-extrabold">{questStats.main}</div>
+            <div class="text-xs text-white/70">主線任務</div>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/8 px-4 py-3">
+            <div class="text-[11px] font-bold tracking-[0.18em] text-white/60">SIDE</div>
+            <div class="mt-1 text-2xl font-extrabold">{questStats.side}</div>
+            <div class="text-xs text-white/70">支線任務</div>
+          </div>
+          <div class="rounded-2xl border border-white/12 bg-white/8 px-4 py-3">
+            <div class="text-[11px] font-bold tracking-[0.18em] text-white/60">CROSS</div>
+            <div class="mt-1 text-2xl font-extrabold">{questStats.cross}</div>
+            <div class="text-xs text-white/70">交會任務</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        {Object.values(questTypeMeta).map((meta) => (
+          <div class="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-white" style={`background:${meta.color}33;`}>
+            {meta.label}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="space-y-6">
+      {questBoardSections.map((section) => (
+        <section>
+          <div class="mb-3 flex items-end justify-between gap-3">
+            <div>
+              <h4 class="text-base font-extrabold text-[#2f2420]">{section.title}</h4>
+              <p class="mt-1 text-sm text-[#7a655f]">{section.summary}</p>
+            </div>
+            <div class="rounded-full bg-[#fff4ee] px-3 py-1 text-xs font-bold text-[#b33d34]">
+              {section.lines.reduce((sum, line) => sum + line.steps.length, 0)} 節點
+            </div>
+          </div>
+
+          <div class="grid gap-4 xl:grid-cols-2">
+            {section.lines.map((line) => (
+              <details class="group overflow-hidden rounded-[26px] border border-[#eadfd8] bg-white shadow-[0_12px_36px_rgba(92,58,40,0.08)]">
+                <summary
+                  class="relative cursor-pointer list-none overflow-hidden px-5 py-5"
+                  style={`background:linear-gradient(135deg, ${line.tone.bg} 0%, #fffaf7 68%, #ffffff 100%);`}
+                >
+                  <div class="absolute right-0 top-0 h-24 w-24 rounded-full blur-2xl" style={`background:${line.tone.color}18;`}></div>
+                  <div class="relative flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                      <div class="text-[11px] font-bold tracking-[0.2em]" style={`color:${line.tone.color};`}>MISSION LINE</div>
+                      <div class="mt-1 text-lg font-extrabold text-[#2f2420]">{line.title}</div>
+                      <p class="mt-2 text-sm leading-6 text-[#6f5b54]">{line.summary}</p>
+                    </div>
+                    <div class="shrink-0 rounded-2xl border border-white/70 bg-white/80 px-3 py-2 text-right shadow-sm">
+                      <div class="text-xs font-bold" style={`color:${line.tone.color};`}>STAGE</div>
+                      <div class="mt-1 text-xl font-extrabold text-[#2f2420]">{line.steps.length}</div>
+                    </div>
+                  </div>
+                </summary>
+
+                <div class="border-t border-[#f1e6df] bg-[#fffdfb] px-5 py-5">
+                  <div class="space-y-3">
+                    {line.steps.map((step, index) => {
+                      const questMeta = questTypeMeta[step.questType];
+                      return (
+                        <div class="flex items-stretch gap-3">
+                          <div class="flex w-10 flex-col items-center">
+                            <div
+                              class="flex h-10 w-10 items-center justify-center rounded-full border-2 bg-white text-xs font-extrabold shadow-sm"
+                              style={`border-color:${line.tone.color}45; color:${line.tone.color}; box-shadow:0 0 0 6px ${line.tone.color}12;`}
+                            >
+                              {step.order}
+                            </div>
+                            {index < line.steps.length - 1 && (
+                              <div class="mt-2 h-full min-h-10 w-[2px] rounded-full" style={`background:linear-gradient(180deg, ${line.tone.color}66 0%, ${line.tone.color}18 100%);`}></div>
+                            )}
+                          </div>
+
+                          <button
+                            type="button"
+                            data-item-modal={step.id}
+                            class="min-w-0 flex-1 rounded-[22px] border border-[#efe4de] bg-white px-4 py-4 text-left transition-all hover:-translate-y-0.5 hover:bg-[#fff7f1] hover:shadow-[0_12px_30px_rgba(108,71,52,0.10)]"
+                          >
+                            <div class="flex flex-wrap items-start justify-between gap-2">
+                              <div class="min-w-0">
+                                <div class="text-xs font-extrabold" style={`color:${line.tone.color};`}>{step.id}</div>
+                                <div class="mt-1 text-base font-bold text-[#3f332f]">{step.title}</div>
+                              </div>
+                              <span class="rounded-full px-2.5 py-1 text-[11px] font-bold" style={`background:${questMeta.bg}; color:${questMeta.color};`}>
+                                {questMeta.label}
+                              </span>
+                            </div>
+
+                            <div class="mt-2 text-sm leading-6 text-[#7a655f]">{step.note}</div>
+
+                            <div class="mt-3 flex flex-wrap gap-2">
+                              {step.prerequisites.length > 0 ? (
+                                step.prerequisites.map((prerequisite) => (
+                                  <span class="rounded-full border border-[#f0e4de] bg-[#fffaf7] px-2.5 py-1 text-[11px] font-bold text-[#8b6d63]">
+                                    前置 {prerequisite.id}
+                                  </span>
+                                ))
+                              ) : (
+                                <span class="rounded-full bg-[#fde8e7] px-2.5 py-1 text-[11px] font-bold text-[#b33d34]">起始節點</span>
+                              )}
+
+                              {step.unlocks.length > 0 && (
+                                <span class="rounded-full px-2.5 py-1 text-[11px] font-bold" style={`background:${line.tone.bg}; color:${line.tone.color};`}>
+                                  解鎖 {step.unlocks.length} 個後續
+                                </span>
+                              )}
+                            </div>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <dialog id="math-dialog" class="m-auto w-[min(760px,calc(100vw-2rem))] rounded-[28px] border border-[#eadfd8] p-0 text-left shadow-[0_24px_80px_rgba(55,33,24,0.22)] backdrop:bg-[rgba(34,24,20,0.38)]">
+    <div class="border-b border-[#f1e4de] bg-[#fff8f3] px-6 py-4">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div id="math-dialog-kicker" class="text-xs font-bold tracking-[0.24em] text-[#b33d34]"></div>
+          <h3 id="math-dialog-title" class="mt-1 text-xl font-extrabold text-[#2f2420]"></h3>
+        </div>
+        <button type="button" data-dialog-close class="rounded-full bg-white px-3 py-1 text-sm font-bold text-[#8b6d63] ring-1 ring-[#eadfd8]">
+          關閉
+        </button>
+      </div>
+    </div>
+    <div id="math-dialog-body" class="max-h-[70vh] overflow-y-auto px-6 py-5"></div>
+  </dialog>
+
+  <script type="application/json" id="math-axis-data" set:html={axisModalJson}></script>
+  <script type="application/json" id="math-item-data" set:html={itemModalJson}></script>
+</section>
+
+<script>
+  const root = document.getElementById('math-overview');
+
+  if (root) {
+    const tabButtons = Array.from(root.querySelectorAll('[data-tab-trigger]'));
+    const tabPanels = Array.from(root.querySelectorAll('[data-tab-panel]'));
+    const dialog = root.querySelector('#math-dialog');
+    const dialogKicker = root.querySelector('#math-dialog-kicker');
+    const dialogTitle = root.querySelector('#math-dialog-title');
+    const dialogBody = root.querySelector('#math-dialog-body');
+    const closeButton = root.querySelector('[data-dialog-close]');
+    const axisData = JSON.parse(root.querySelector('#math-axis-data')?.textContent ?? '{}');
+    const itemData = JSON.parse(root.querySelector('#math-item-data')?.textContent ?? '{}');
+
+    const setActiveTab = (tab) => {
+      tabButtons.forEach((button) => {
+        const active = button.getAttribute('data-tab') === tab;
+        button.classList.toggle('bg-[#b33d34]', active);
+        button.classList.toggle('text-white', active);
+        button.classList.toggle('bg-white', !active);
+        button.classList.toggle('text-[#8b6d63]', !active);
+        button.classList.toggle('ring-1', !active);
+        button.classList.toggle('ring-[#eadfd8]', !active);
+      });
+
+      tabPanels.forEach((panel) => {
+        panel.classList.toggle('hidden', panel.getAttribute('data-tab-panel') !== tab);
+      });
+    };
+
+    const openDialog = (kicker, title, html) => {
+      if (!(dialog && dialogKicker && dialogTitle && dialogBody)) return;
+      dialogKicker.textContent = kicker;
+      dialogTitle.textContent = title;
+      dialogBody.innerHTML = html;
+      dialog.showModal();
+    };
+
+    const renderAxisDialog = (axisId) => {
+      const axis = axisData[axisId];
+      if (!axis) return;
+
+      const html = `
+        <div class="rounded-[24px] border p-5" style="border-color:${axis.color}26; background:${axis.bg};">
+          <div class="flex items-center justify-between gap-3">
+            <div class="text-lg font-extrabold" style="color:${axis.color};">
+              ${axis.label}
+            </div>
+            <div class="rounded-full bg-white/80 px-3 py-1 text-xs font-bold" style="color:${axis.color};">
+              ${axis.items.length} 小節
+            </div>
+          </div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            ${axis.items
+              .map(
+                (item) => `
+                  <button type="button" data-item-modal="${item.id}" class="rounded-xl border border-[#f0e4de] bg-[#fffaf7] px-3 py-2 text-left transition-colors hover:bg-[#fff4ee]">
+                    <div class="text-xs font-extrabold" style="color:${axis.color}">${item.id}</div>
+                    <div class="mt-1 text-sm font-semibold text-[#584742]">${item.title}</div>
+                  </button>
+                `,
+              )
+              .join('')}
+          </div>
+        </div>
+      `;
+
+      openDialog('主軸分類', axis.label, html);
+    };
+
+    const renderItemDialog = (itemId) => {
+      const item = itemData[itemId];
+      if (!item) return;
+
+      const related = item.related.map((relatedId) => axisData[relatedId]).filter(Boolean);
+      const questTypeMeta = {
+        start: { label: '起始任務', color: '#B33D34', bg: '#FDE8E7' },
+        main: { label: '主線任務', color: '#1B6FA0', bg: '#E8F4FD' },
+        side: { label: '支線任務', color: '#7B3DB5', bg: '#F3EAFC' },
+        cross: { label: '交會任務', color: '#2F7A6B', bg: '#E7F6F2' },
+      };
+      const quest = item.quest;
+      const questMeta = quest ? questTypeMeta[quest.questType] : null;
+
+      const html = `
+        ${quest ? `
+          <section class="mb-4 rounded-2xl border border-[#efe4de] bg-[#fffaf7] p-4">
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="text-sm font-extrabold text-[#b33d34]">任務地圖</div>
+              ${questMeta ? `
+                <span class="rounded-full px-3 py-1 text-xs font-bold" style="background:${questMeta.bg}; color:${questMeta.color};">
+                  ${questMeta.label}
+                </span>
+              ` : ''}
+            </div>
+            <div class="mt-2 text-base font-bold text-[#3f332f]">${quest.lineTitle}</div>
+            <div class="mt-1 text-sm leading-6 text-[#6a5953]">${quest.lineSummary}</div>
+            <div class="mt-3 grid gap-3 sm:grid-cols-2">
+              <div class="rounded-2xl border border-[#f0e4de] bg-white p-3">
+                <div class="text-xs font-extrabold text-[#8b6d63]">前置任務</div>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  ${quest.prerequisites.length > 0
+                    ? quest.prerequisites.map((prerequisite) => `
+                      <span class="rounded-full bg-[#f6ebe5] px-2.5 py-1 text-xs font-bold text-[#8b6d63]">
+                        ${prerequisite.id}
+                      </span>
+                    `).join('')
+                    : '<span class="rounded-full bg-[#fff4ee] px-2.5 py-1 text-xs font-bold text-[#b33d34]">無前置</span>'}
+                </div>
+              </div>
+              <div class="rounded-2xl border border-[#f0e4de] bg-white p-3">
+                <div class="text-xs font-extrabold text-[#8b6d63]">解鎖後續</div>
+                <div class="mt-2 flex flex-wrap gap-2">
+                  ${quest.unlocks.length > 0
+                    ? quest.unlocks.map((unlock) => `
+                      <span class="rounded-full bg-[#f6ebe5] px-2.5 py-1 text-xs font-bold text-[#8b6d63]">
+                        ${unlock.id}
+                      </span>
+                    `).join('')
+                    : '<span class="rounded-full bg-[#f8f1ed] px-2.5 py-1 text-xs font-bold text-[#8b6d63]">目前沒有後續節點</span>'}
+                </div>
+              </div>
+            </div>
+          </section>
+        ` : ''}
+        ${related.length > 0 ? `
+          <section class="mb-4 rounded-2xl border border-[#efe4de] bg-[#fffaf7] p-4">
+            <div class="text-sm font-extrabold text-[#b33d34]">副關聯</div>
+            <div class="mt-2 flex flex-wrap gap-2">
+              ${related
+                .map(
+                  (axis) => `
+                    <span class="rounded-full px-3 py-1 text-sm font-bold" style="background:${axis.bg}; color:${axis.color};">
+                      ${axis.label}
+                    </span>
+                  `,
+                )
+                .join('')}
+            </div>
+          </section>
+        ` : ''}
+        ${item.paths
+          .map(
+            (path) => `
+              <section class="mb-4 rounded-2xl border border-[#efe4de] bg-[#fffaf7] p-4">
+                <div class="text-sm font-extrabold text-[#b33d34]">${path.title}</div>
+                <div class="mt-3 space-y-3">
+                  ${path.steps
+                    .map(
+                      (step, index) => `
+                        <div class="flex items-start gap-3">
+                          <div class="flex min-w-0 flex-1 items-start gap-3 rounded-2xl border px-4 py-3 ${
+                            index === path.activeIndex ? 'border-[#e2574c] bg-[#fff1eb]' : 'border-[#f0e4de] bg-white'
+                          }">
+                            <div class="mt-0.5 rounded-full px-2 py-1 text-xs font-extrabold ${index === path.activeIndex ? 'bg-[#e2574c] text-white' : 'bg-[#fde8e7] text-[#b33d34]'}">
+                              ${index + 1}
+                            </div>
+                            <div>
+                              <div class="font-semibold text-[#3f332f]">${step.id} ${step.title}</div>
+                              <div class="mt-1 text-sm leading-6 text-[#6a5953]">${step.note}</div>
+                            </div>
+                          </div>
+                          ${index < path.steps.length - 1 ? '<div class="pt-4 text-sm font-extrabold text-[#c47a35]">→</div>' : ''}
+                        </div>
+                      `,
+                    )
+                    .join('')}
+                </div>
+              </section>
+            `,
+          )
+          .join('')}
+      `;
+
+      openDialog(item.chapter, `${itemId} ${item.title}`, html);
+    };
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const tab = button.getAttribute('data-tab');
+        if (tab) setActiveTab(tab);
+      });
+    });
+
+    root.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      const axisButton = target.closest('[data-axis-modal]');
+      if (axisButton instanceof HTMLElement) {
+        const axisId = axisButton.getAttribute('data-axis-modal');
+        if (axisId) renderAxisDialog(axisId);
+        return;
+      }
+
+      const itemButton = target.closest('[data-item-modal]');
+      if (itemButton instanceof HTMLElement) {
+        const itemId = itemButton.getAttribute('data-item-modal');
+        if (itemId) renderItemDialog(itemId);
+      }
+    });
+
+    closeButton?.addEventListener('click', () => dialog?.close());
+    dialog?.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    setActiveTab('book');
+  }
+</script>

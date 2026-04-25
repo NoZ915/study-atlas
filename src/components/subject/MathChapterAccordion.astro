@@ -1,0 +1,72 @@
+---
+interface AxisMeta {
+  id: string;
+  short: string;
+  color: string;
+  bg: string;
+}
+
+interface ChapterItem {
+  id: string;
+  title: string;
+}
+
+interface ChapterData {
+  id: string;
+  title: string;
+  axes: string[];
+  items: ChapterItem[];
+}
+
+interface Props {
+  chapter: ChapterData;
+  axisMap: Record<string, AxisMeta>;
+  showAxisButtons?: boolean;
+}
+
+const { chapter, axisMap, showAxisButtons = false } = Astro.props;
+---
+
+<details class="rounded-2xl border border-[#efe4de] bg-white">
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-4">
+    <div class="min-w-0">
+      <div class="font-semibold text-[#3f332f]">{chapter.title}</div>
+    </div>
+    <div class="shrink-0 rounded-full bg-[#fff4ee] px-2.5 py-1 text-xs font-bold text-[#b33d34]">
+      {chapter.items.length} 小節
+    </div>
+  </summary>
+
+  <div class="border-t border-[#f3e7e2] px-4 py-4">
+    {showAxisButtons && (
+      <div class="mb-3 flex flex-wrap gap-2">
+        {chapter.axes.map((axisId) => {
+          const axis = axisMap[axisId];
+          return (
+            <button
+              type="button"
+              data-axis-modal={axis.id}
+              class="rounded-full border px-3 py-1 text-xs font-bold"
+              style={`border-color:${axis.color}22; background:${axis.bg}; color:${axis.color};`}
+            >
+              {axis.short}
+            </button>
+          );
+        })}
+      </div>
+    )}
+
+    <div class="grid gap-2 sm:grid-cols-2">
+      {chapter.items.map((item) => (
+        <button
+          type="button"
+          data-item-modal={item.id}
+          class="rounded-xl border border-[#f0e4de] bg-[#fffaf7] px-3 py-2 text-left transition-colors hover:bg-[#fff4ee]"
+        >
+          <div class="text-xs font-extrabold text-[#b33d34]">{item.id}</div>
+          <div class="mt-1 text-sm text-[#584742]">{item.title}</div>
+        </button>
+      ))}
+    </div>
+  </div>
+</details>

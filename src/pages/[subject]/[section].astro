@@ -6,6 +6,7 @@ import MagneticEffect from '../../components/sections/physics-4-1/MagneticEffect
 import ElectromagneticInduction from '../../components/sections/physics-4-2/ElectromagneticInduction';
 import CellStructure from '../../components/sections/biology-1-1/CellStructure';
 import VocabReview from '../../components/sections/english-1-1/VocabReview';
+import NumberAndExpression from '../../components/sections/math-1-1/NumberAndExpression';
 
 // Generate all section routes
 export function getStaticPaths() {
@@ -34,7 +35,8 @@ const hasComponent =
   componentKey === 'physics/4-1' ||
   componentKey === 'physics/4-2' ||
   componentKey === 'biology/1-1' ||
-  componentKey === 'english/1-1';
+  componentKey === 'english/1-1' ||
+  componentKey === 'math/1-1';
 ---
 
 <BaseLayout
@@ -77,6 +79,7 @@ const hasComponent =
       componentKey === 'physics/4-0' ? <CircuitReview client:load /> :
       componentKey === 'physics/4-1' ? <MagneticEffect client:load /> :
       componentKey === 'physics/4-2' ? <ElectromagneticInduction client:load /> :
+      componentKey === 'math/1-1' ? <NumberAndExpression client:load /> :
       componentKey === 'english/1-1' ? <VocabReview client:load /> :
       <CellStructure client:load />
     ) : (
